@@ -1,0 +1,8 @@
+{
+  "name": "Sylvain Tevoedjre, Développeur Web",
+  "short_name": "S. Tevoedjre",
+  "icons": [{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone"
+}
