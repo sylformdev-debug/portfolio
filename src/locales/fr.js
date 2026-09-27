@@ -96,6 +96,10 @@ export const fr = {
     title: 'Certifications',
     intro: 'Les formations certifiantes qui complètent mon parcours.',
     verify: 'Vérifier',
+    view: 'Voir le certificat',
+    viewAria: 'Voir le certificat {title} (PDF, nouvel onglet)',
+    verifyAria: 'Vérifier le certificat {title} sur le site de l’organisme (nouvel onglet)',
+    credentialId: 'Identifiant :',
     skills: 'Compétences',
   },
   services: {

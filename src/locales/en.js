@@ -96,6 +96,10 @@ export const en = {
     title: 'Certifications',
     intro: 'Certified training that complements my background.',
     verify: 'Verify',
+    view: 'View certificate',
+    viewAria: 'View the {title} certificate (PDF, new tab)',
+    verifyAria: 'Verify the {title} certificate on the issuer’s website (new tab)',
+    credentialId: 'Credential ID:',
     skills: 'Skills',
   },
   services: {
