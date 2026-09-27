@@ -4,13 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sylvain Tevoedjre, Développeur Web à Cotonou</title>
+    <title>Sylvain Tevoedjre, Développeur Web Full Stack à Cotonou</title>
+
+    <!-- Applique le thème et la langue enregistrés avant l'affichage, pour éviter un flash. -->
+    <script>
+      try {
+        var theme = localStorage.getItem('portfolio-theme')
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        }
+        document.documentElement.dataset.theme = theme
+        var lang = localStorage.getItem('portfolio-lang')
+        if (lang === 'fr' || lang === 'en') document.documentElement.lang = lang
+      } catch (error) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
     <meta
       name="description"
-      content="Portfolio de Sylvain Tevoedjre, développeur web basé à Cotonou (Bénin) : sites, applications web, e-commerce et API avec React, Laravel et MySQL."
+      content="Portfolio de Sylvain Tevoedjre, développeur web full stack à Cotonou (Bénin) : applications web, e-commerce et API avec React, Laravel, Node.js, MySQL et MongoDB."
     />
     <meta name="author" content="Sylvain Tevoedjre" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -21,7 +37,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="Sylvain Tevoedjre" />
-    <meta property="og:title" content="Sylvain Tevoedjre, Développeur Web" />
+    <meta property="og:title" content="Sylvain Tevoedjre, Développeur Web Full Stack" />
     <meta
       property="og:description"
       content="Sites, applications web, e-commerce et API, conçus à partir des besoins réels de leurs utilisateurs."
@@ -38,7 +54,7 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Sylvain Tevoedjre",
-        "jobTitle": "Développeur Web",
+        "jobTitle": "Développeur Web Full Stack",
         "url": "%VITE_SITE_URL%/",
         "email": "mailto:sylformdev@gmail.com",
         "address": { "@type": "PostalAddress", "addressLocality": "Cotonou", "addressCountry": "BJ" },

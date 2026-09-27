@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 
-// Renvoie l'id de la section actuellement au centre de l'écran.
-export function useActiveSection(sectionIds) {
+// Renvoie l'id de la section actuellement au centre de l'écran (uniquement si « enabled »).
+export function useActiveSection(sectionIds, enabled = true) {
   const [activeId, setActiveId] = useState(sectionIds[0])
 
   useEffect(() => {
+    if (!enabled) return undefined
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -20,7 +22,7 @@ export function useActiveSection(sectionIds) {
     })
 
     return () => observer.disconnect()
-  }, [sectionIds])
+  }, [sectionIds, enabled])
 
   return activeId
 }

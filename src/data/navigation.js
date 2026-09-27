@@ -1,12 +1,13 @@
-// L'ordre de ce tableau définit l'ordre du menu. Chaque id doit correspondre à l'id d'une section.
+// Sections de la page d'accueil, dans l'ordre. « key » renvoie au libellé traduit dans src/locales (nav.xxx).
 export const navigation = [
-  { id: 'accueil', label: 'Accueil' },
-  { id: 'a-propos', label: 'À propos' },
-  { id: 'competences', label: 'Compétences' },
-  { id: 'projets', label: 'Projets' },
-  { id: 'parcours', label: 'Parcours' },
-  { id: 'services', label: 'Services' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'accueil', key: 'home' },
+  { id: 'a-propos', key: 'about' },
+  { id: 'competences', key: 'skills' },
+  { id: 'projets', key: 'projects' },
+  { id: 'parcours', key: 'experience' },
+  { id: 'certifications', key: 'certifications' },
+  { id: 'services', key: 'services' },
+  { id: 'contact', key: 'contact' },
 ]
 
 export const sectionIds = navigation.map((item) => item.id)

@@ -1,9 +1,11 @@
-import { profile } from '../data/profile'
+import { profile } from '../../data/profile'
+import { usePreferences } from '../../hooks/usePreferences'
+import { useHeroMotion } from '../../hooks/useHeroMotion'
 
 /*
-  Élément visuel du Hero : des courbes de niveau tracées en or autour d'un point, Cotonou.
+  Visuel du Hero : des courbes de niveau tracées en or autour d'un point, Cotonou.
   Un clin d'œil au travail de terrain de l'anthropologue, et au plan que l'on dessine avant de construire.
-  Les tracés sont calculés une seule fois au chargement du module.
+  Chaque courbe réagit à la souris avec une intensité différente, ce qui crée une impression de relief.
 */
 
 const SIZE = 480
@@ -29,15 +31,23 @@ function contourPath(radius, seed) {
 const contours = [32, 58, 86, 116, 148, 182].map((radius, index) => ({
   d: contourPath(radius, index * 0.55),
   opacity: 1 - index * 0.13,
-  delay: index * 140,
+  delay: 300 + index * 140,
+  depth: (6 - index) * 3.2, // les courbes centrales bougent le plus : le « sommet » se détache
 }))
 
 const ticks = Array.from({ length: 13 }, (_, index) => 24 + index * 36)
 
 export default function HeroMap() {
+  const { l } = usePreferences()
+  const motionRef = useHeroMotion()
+
   return (
-    <figure className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
-      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="h-auto w-full" aria-hidden="true" focusable="false">
+    <figure
+      ref={motionRef}
+      className="intro-fade relative mx-auto w-full max-w-[26rem] lg:max-w-none"
+      style={{ '--intro-delay': '200ms', transform: 'translate3d(0, var(--sy, 0px), 0)' }}
+    >
+      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="h-auto w-full overflow-visible" aria-hidden="true" focusable="false">
         <g stroke="currentColor" className="text-line" strokeWidth="1">
           <line x1="0" y1={CENTER} x2={SIZE} y2={CENTER} />
           <line x1={CENTER} y1="0" x2={CENTER} y2={SIZE} />
@@ -51,22 +61,36 @@ export default function HeroMap() {
 
         <g fill="none" stroke="currentColor" className="text-gold" strokeWidth="1.1">
           {contours.map((contour) => (
-            <path
+            <g
               key={contour.d.slice(0, 24)}
-              d={contour.d}
-              pathLength="1"
-              className="draw-line"
-              style={{ '--draw-delay': `${contour.delay}ms`, opacity: contour.opacity }}
-            />
+              style={{
+                transform: `translate(calc(var(--mx, 0) * ${contour.depth}px), calc(var(--my, 0) * ${contour.depth}px))`,
+                transition: 'transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1)',
+              }}
+            >
+              <path
+                d={contour.d}
+                pathLength="1"
+                className="draw-line"
+                style={{ '--draw-delay': `${contour.delay}ms`, opacity: contour.opacity }}
+              />
+            </g>
           ))}
         </g>
 
-        <circle cx={CENTER} cy={CENTER} r="4.5" className="fill-gold" />
-        <circle cx={CENTER} cy={CENTER} r="11" fill="none" stroke="currentColor" className="text-gold/50" />
+        <g
+          style={{
+            transform: 'translate(calc(var(--mx, 0) * 22px), calc(var(--my, 0) * 22px))',
+            transition: 'transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1)',
+          }}
+        >
+          <circle cx={CENTER} cy={CENTER} r="4.5" className="fill-gold" />
+          <circle cx={CENTER} cy={CENTER} r="11" fill="none" stroke="currentColor" className="text-gold/50" />
+        </g>
       </svg>
 
       <figcaption className="mt-4 flex items-baseline justify-between gap-4 border-t border-line pt-3 text-sm text-muted">
-        <span>{profile.location}</span>
+        <span>{l(profile.location)}</span>
         <span className="tabular-nums">{profile.coordinates}</span>
       </figcaption>
     </figure>
