@@ -38,7 +38,8 @@ export default function ProjectCover({ project, priority = false, className = 'a
           height="800"
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
-          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          style={{ objectPosition: project.imagePosition ?? 'left top' }}
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
       ) : (
         <div className="absolute inset-0" aria-hidden="true">

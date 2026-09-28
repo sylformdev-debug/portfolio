@@ -5,6 +5,8 @@ import hotelSeguroCover from '../assets/projects/hotel-seguro.webp'
 import hotelSeguroExperiences from '../assets/projects/hotel-seguro-experiences.webp'
 import dropcreaCover from '../assets/projects/dropcrea.webp'
 import globalImmigrationCover from '../assets/projects/global-immigration.webp'
+import rouageCover from '../assets/projects/rouage.webp'
+import rouageCatalogue from '../assets/projects/rouage-catalogue.webp'
 
 /*
   PROJETS
@@ -19,6 +21,7 @@ import globalImmigrationCover from '../assets/projects/global-immigration.webp'
   - image       : capture principale. Placez-la dans src/assets/projects/ puis importez-la en haut du fichier :
                     import credixaCover from '../assets/projects/credixa.webp'
                   et écrivez image: credixaCover
+  - imagePosition : cadrage de la capture dans les vignettes ('left top' par défaut, 'center'…)
   - gallery     : autres captures, au même format [credixaDashboard, credixaAdmin]
   - links       : github et demo ; un bouton n'apparaît que si le lien est rempli
 
@@ -108,8 +111,8 @@ export const projects = [
       en: 'The site runs locally (XAMPP), and production email delivery through Brevo’s SMTP has been configured and successfully tested.',
     },
     stack: ['Laravel 9', 'PHP', 'MySQL', 'Brevo SMTP'],
-    image: null,
-    gallery: [],
+    image: rouageCover,
+    gallery: [rouageCatalogue],
     links: { github: '', demo: '' },
   },
   {
@@ -280,6 +283,7 @@ export const projects = [
     ],
     stack: [],
     image: globalImmigrationCover,
+    imagePosition: 'center', // cadrage de la capture (par défaut : en haut à gauche)
     gallery: [],
     links: { github: '', demo: '' },
   },
