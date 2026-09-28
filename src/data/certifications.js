@@ -67,11 +67,22 @@ export const certifications = [
     skills: [{ fr: 'Marketing numérique', en: 'Digital marketing' }],
   },
   {
-    title: { fr: 'Formation en informatique', en: 'Computer training' },
-    organization: '',
-    issued: '2020',
+    // Le diplôme n'est pas publié : il contient la date et le lieu de naissance.
+    title: { fr: 'Diplôme de fin d’apprentissage en informatique', en: 'Computer skills apprenticeship diploma' },
+    organization: { fr: 'Jean-Claude Koukoui, maître informaticien, Porto-Novo', en: 'Jean-Claude Koukoui, master IT trainer, Porto-Novo' },
+    issued: '2020-08-23',
+    duration: { fr: 'De décembre 2019 à août 2020', en: 'December 2019 to August 2020' },
     image: null,
-    description: null,
-    skills: [],
+    description: {
+      fr: 'Formation en informatique bureautique de huit mois, validée par un diplôme de fin d’apprentissage.',
+      en: 'Eight-month office computing training, completed with an apprenticeship diploma.',
+    },
+    skills: [
+      { fr: 'Word', en: 'Word' },
+      { fr: 'Excel', en: 'Excel' },
+      { fr: 'PowerPoint', en: 'PowerPoint' },
+      { fr: 'Publisher', en: 'Publisher' },
+      { fr: 'Internet', en: 'Internet' },
+    ],
   },
 ]

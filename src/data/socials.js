@@ -4,7 +4,7 @@ import { profile, emailLink, whatsappLink } from './profile'
 
 // Liens affichés dans la section Contact et le footer.
 export const socials = [
-  { name: 'Email', handle: profile.email, href: emailLink, icon: Mail },
+  { name: 'Email', handle: profile.email, href: emailLink, icon: Mail, copyable: true },
   { name: 'LinkedIn', handle: 'tevoedjre-sylvain', href: profile.socials.linkedin, icon: LinkedinIcon },
   { name: 'GitHub', handle: 'sylformdev-debug', href: profile.socials.github, icon: GithubIcon },
   { name: 'WhatsApp', handle: profile.phoneDisplay, href: whatsappLink, icon: WhatsappIcon },

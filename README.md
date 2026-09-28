@@ -2,14 +2,16 @@
 
 Portfolio de développeur web full stack : **React 19**, **Vite**, **React Router**, **Tailwind CSS v4**, **Lucide React**.
 
-Thème sombre et clair, français et anglais, page Projets avec filtres, étude de cas pour chaque projet, certifications, formulaire de contact validé.
+Thème sombre et clair, français et anglais, page Projets avec filtres, étude de cas pour chaque projet avec visionneuse de captures, certifications vérifiables, recherche rapide (Ctrl + K), formulaire de contact validé.
+
+**Mise en ligne : voir [DEPLOIEMENT.md](DEPLOIEMENT.md).**
 
 ## Démarrer
 
 ```bash
 npm install
 npm run dev       # développement : http://localhost:5173
-npm run build     # version de production dans dist/
+npm run build     # version de production dans dist/ (+ pré-rendu des pages et sitemap)
 npm run preview   # tester la version de production : http://localhost:4173
 npm run lint      # vérifier le code
 ```
@@ -54,7 +56,7 @@ Les textes d'interface sont appelés dans les composants avec `t('nav.projects')
 
 1. Copiez un objet dans `src/data/projects.js`. Seuls `slug`, `title`, `categories`, `summary` et `stack` sont obligatoires.
    Les rubriques vides (rôle, architecture, défis techniques, galerie…) ne s'affichent pas.
-2. **Captures** : placez les images dans `src/assets/projects/` (`.webp` conseillé, 1600 × 1000 px, moins de 250 Ko), puis :
+2. **Captures** : placez les images dans `src/assets/projects/` (`.webp` conseillé, 1600 px de large, moins de 250 Ko), puis :
    ```js
    import credixaCover from '../assets/projects/credixa-cover.webp'
    import credixaAdmin from '../assets/projects/credixa-admin.webp'
@@ -63,6 +65,7 @@ Les textes d'interface sont appelés dans les composants avec `t('nav.projects')
    gallery: [credixaAdmin],
    ```
    Sans image, une couverture est générée automatiquement à partir du nom et des technologies du projet.
+   Image de partage (facultative) : `public/og/<slug>.jpg`, 1200 × 630 px.
 3. **Liens** : `links.github` et `links.demo`. Un bouton n'apparaît que si le lien est rempli.
 4. `featured: true` affiche le projet sur l'accueil ; `draft: true` le masque du site.
 
@@ -92,6 +95,15 @@ Les erreurs apparaissent au premier envoi, puis se mettent à jour pendant la sa
 
 Ne placez jamais de clé secrète dans une variable `VITE_` : elle est visible dans le navigateur.
 
+## Fonctionnalités
+
+- **Recherche rapide** : `Ctrl + K` (ou `⌘ + K`), ou l'icône loupe. Aller à une section ou un projet, changer de thème ou de langue, copier l'email, télécharger le CV.
+- **Visionneuse** : sur une étude de cas, un clic sur une capture l'ouvre en plein écran (flèches ← → pour naviguer, Échap pour fermer).
+- **Copie de l'email** en un clic dans la section Contact, avec notification.
+- **Barre de progression** de lecture et bouton « Revenir en haut ».
+- **Pré-rendu SEO** (`scripts/prerender.mjs`) : après le build, chaque page `/projects/...` reçoit son propre titre, sa description et son image de partage (`public/og/<slug>.jpg`), et un `sitemap.xml` est généré.
+- **Mesure d'audience** Vercel, sans cookie, activable par variable d'environnement.
+
 ## Animations et accessibilité
 
 - Séquence d'apparition au chargement, apparition des sections au défilement, parallaxe légère et relief du visuel du Hero à la souris.
@@ -106,19 +118,20 @@ Copiez `.env.example` en `.env` :
 
 - `VITE_SITE_URL` : adresse publique du site, sans `/` final (URL canonique, aperçu LinkedIn / WhatsApp).
 - `VITE_CONTACT_ENDPOINT` : facultatif, voir ci-dessus.
+- `VITE_ENABLE_ANALYTICS` : `true` pour activer Vercel Web Analytics.
 
 ## Déployer
 
 Le site utilise des routes (`/projects/credixa`) : l'hébergeur doit renvoyer `index.html` pour ces adresses. C'est déjà configuré.
 
-**Vercel** : importez le dépôt GitHub (framework « Vite »), ajoutez les variables d'environnement, déployez. `vercel.json` contient la réécriture des routes.
-
-**Netlify** : importez le dépôt ; `netlify.toml` contient la commande, le dossier `dist` et la redirection des routes.
+Guide pas à pas : [DEPLOIEMENT.md](DEPLOIEMENT.md). `vercel.json` contient déjà la configuration (routes, cache, en-têtes de sécurité).
+Netlify fonctionne aussi grâce à `netlify.toml`.
 
 ## Structure
 
 ```
-public/                 favicon, image de partage, CV, robots.txt
+public/                 favicon, images de partage (og/), CV, certificats (certificates/)
+scripts/prerender.mjs   pré-rendu des pages et sitemap après le build
 src/
 ├── assets/projects/    captures des projets
 ├── components/

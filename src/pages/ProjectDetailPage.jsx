@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Maximize2 } from 'lucide-react'
 import { findProject, getNextProject } from '../data/projects'
 import { usePreferences } from '../hooks/usePreferences'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
@@ -8,6 +9,7 @@ import Reveal from '../components/ui/Reveal'
 import Tag from '../components/ui/Tag'
 import ProjectCover from '../components/projects/ProjectCover'
 import ProjectLinks from '../components/projects/ProjectLinks'
+import ImageLightbox from '../components/projects/ImageLightbox'
 import NotFoundPage from './NotFoundPage'
 
 // Une rubrique de l'étude de cas : titre à gauche, contenu à droite. N'est affichée que si elle a un contenu.
@@ -41,11 +43,16 @@ export default function ProjectDetailPage() {
   const { slug } = useParams()
   const { t, l } = usePreferences()
   const project = findProject(slug)
+  // Visionneuse : mémorise le projet concerné pour se refermer quand on passe au projet suivant.
+  const [viewer, setViewer] = useState({ slug: null, index: null })
   useDocumentTitle(project ? `${project.title} | Sylvain Tevoedjre` : t('meta.notFound'))
 
   if (!project) return <NotFoundPage title={t('project.notFoundTitle')} text={t('project.notFoundText')} />
 
   const next = getNextProject(project.slug)
+  const screenshots = [project.image, ...(project.gallery ?? [])].filter(Boolean)
+  const viewerIndex = viewer.slug === project.slug ? viewer.index : null
+  const openViewer = (index) => setViewer({ slug: project.slug, index })
   const hasLinks = project.links.github || project.links.demo
   const meta = [
     { label: t('project.category'), value: l(project.type) },
@@ -85,13 +92,23 @@ export default function ProjectDetailPage() {
       </header>
 
       <div className="intro container-page mt-14" style={{ '--intro-delay': '320ms' }}>
-        <div className="group">
-          <ProjectCover
-            project={project}
-            priority
-            className={project.image ? 'aspect-[16/9]' : 'aspect-[16/9] md:aspect-[21/8]'}
-          />
-        </div>
+        {project.image ? (
+          <button
+            type="button"
+            onClick={() => openViewer(0)}
+            aria-label={t('lightbox.open', { current: 1, title: project.title })}
+            className="group relative block w-full cursor-zoom-in text-left"
+          >
+            <ProjectCover project={project} priority className="aspect-[16/9]" />
+            <span className="btn-glass btn-glass--icon absolute right-4 bottom-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+              <Maximize2 size={17} aria-hidden="true" />
+            </span>
+          </button>
+        ) : (
+          <div className="group">
+            <ProjectCover project={project} priority className="aspect-[16/9] md:aspect-[21/8]" />
+          </div>
+        )}
       </div>
 
       <div className="container-page mt-10">
@@ -120,15 +137,17 @@ export default function ProjectDetailPage() {
             <BulletList items={project.scope} />
           </CaseSection>
         )}
-        <CaseSection title={t('project.technologies')}>
-          <ul className="flex flex-wrap gap-2">
-            {project.stack.map((tech) => (
-              <li key={tech}>
-                <Tag>{tech}</Tag>
-              </li>
-            ))}
-          </ul>
-        </CaseSection>
+        {project.stack.length > 0 && (
+          <CaseSection title={t('project.technologies')}>
+            <ul className="flex flex-wrap gap-2">
+              {project.stack.map((tech) => (
+                <li key={tech}>
+                  <Tag>{tech}</Tag>
+                </li>
+              ))}
+            </ul>
+          </CaseSection>
+        )}
         {project.role && (
           <CaseSection title={t('project.role')}>
             <p>{l(project.role)}</p>
@@ -143,14 +162,22 @@ export default function ProjectDetailPage() {
           <CaseSection title={t('project.screenshots')}>
             <ul className="grid gap-5 sm:grid-cols-2">
               {project.gallery.map((image, index) => (
-                <li key={image} className="group overflow-hidden rounded-2xl border border-line" data-cursor="media">
-                  <img
-                    src={image}
-                    alt={`${t('project.screenshotAlt', { title: project.title })} (${index + 1})`}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
+                <li key={image}>
+                  <button
+                    type="button"
+                    onClick={() => openViewer(index + 1)}
+                    aria-label={t('lightbox.open', { current: index + 2, title: project.title })}
+                    data-cursor="media"
+                    className="group block w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line transition-colors duration-300 hover:border-gold/50"
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -194,6 +221,15 @@ export default function ProjectDetailPage() {
             <span className="mt-3 block text-muted">{l(next.type)}</span>
           </Link>
         </div>
+      )}
+      {screenshots.length > 0 && (
+        <ImageLightbox
+          images={screenshots}
+          index={viewerIndex}
+          title={project.title}
+          onChange={openViewer}
+          onClose={() => setViewer({ slug: null, index: null })}
+        />
       )}
     </article>
   )

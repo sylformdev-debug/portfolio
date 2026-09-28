@@ -1,3 +1,5 @@
+import portrait from '../assets/profile/sylvain.webp'
+
 // Informations personnelles. Les textes { fr, en } sont traduits automatiquement selon la langue choisie.
 
 export const profile = {
@@ -19,6 +21,9 @@ export const profile = {
 
   // Fichier placé dans public/cv/ : remplacez-le pour mettre votre CV à jour.
   cvUrl: '/cv/CV_TEVOEDJRE_Sylvain.pdf',
+
+  // Photo affichée dans la section À propos (src/assets/profile/).
+  portrait,
 
   heroStack: ['React', 'Laravel', 'Node.js', 'MySQL', 'MongoDB', 'Tailwind CSS'],
 

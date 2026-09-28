@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Copy, Loader2, Send } from 'lucide-react'
 import { socials } from '../../data/socials'
 import { CONTACT_LIMITS, cleanContactValues, validateContact } from '../../utils/validateContact'
 import { isDirectSendEnabled, sendContactMessage } from '../../services/contactService'
 import { usePreferences } from '../../hooks/usePreferences'
+import { copyText } from '../../utils/toast'
 import Section from '../ui/Section'
 import Reveal from '../ui/Reveal'
 import FormField from '../ui/FormField'
@@ -83,11 +84,11 @@ export default function Contact() {
             const Icon = social.icon
             const isExternal = social.href.startsWith('http')
             return (
-              <li key={social.name} className="border-b border-line">
+              <li key={social.name} className="flex items-center gap-3 border-b border-line">
                 <a
                   href={social.href}
                   {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
-                  className="group flex items-center gap-4 py-4"
+                  className="group flex min-w-0 flex-1 items-center gap-4 py-4"
                 >
                   <Icon
                     size={20}
@@ -101,6 +102,17 @@ export default function Contact() {
                     </span>
                   </span>
                 </a>
+                {social.copyable && (
+                  <button
+                    type="button"
+                    onClick={() => copyText(social.handle, t('toast.emailCopied'), t('toast.copyFailed'))}
+                    aria-label={t('contact.copyEmail')}
+                    title={t('contact.copyEmail')}
+                    className="btn-glass btn-glass--icon shrink-0"
+                  >
+                    <Copy size={16} aria-hidden="true" />
+                  </button>
+                )}
               </li>
             )
           })}

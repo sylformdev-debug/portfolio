@@ -1,3 +1,11 @@
+import credixaCover from '../assets/projects/credixa.webp'
+import autocostCover from '../assets/projects/autocost.webp'
+import autocostSimulator from '../assets/projects/autocost-simulateur.webp'
+import hotelSeguroCover from '../assets/projects/hotel-seguro.webp'
+import hotelSeguroExperiences from '../assets/projects/hotel-seguro-experiences.webp'
+import dropcreaCover from '../assets/projects/dropcrea.webp'
+import globalImmigrationCover from '../assets/projects/global-immigration.webp'
+
 /*
   PROJETS
 
@@ -60,7 +68,7 @@ export const projects = [
       en: 'Nearly production-ready: email delivery through Brevo’s SMTP still needs to be confirmed before going live.',
     },
     stack: ['React', 'Vite', 'Redux Toolkit', 'React Query', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'JWT'],
-    image: null,
+    image: credixaCover,
     gallery: [],
     links: { github: '', demo: '' },
   },
@@ -136,8 +144,8 @@ export const projects = [
       en: 'Academic project, completed, presented and deployed.',
     },
     stack: ['React', 'Vite', 'Recharts / Chart.js', 'Lucide', 'CarAPI', 'Vercel'],
-    image: null,
-    gallery: [],
+    image: autocostCover,
+    gallery: [autocostSimulator],
     links: { github: '', demo: '' },
   },
   {
@@ -181,8 +189,8 @@ export const projects = [
       en: 'Designed and presented during the EIG 2025 hackathon.',
     },
     stack: ['HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS', 'PHP', 'MySQL'],
-    image: null,
-    gallery: [],
+    image: hotelSeguroCover,
+    gallery: [hotelSeguroExperiences],
     links: { github: '', demo: '' },
   },
   {
@@ -246,18 +254,33 @@ export const projects = [
       { fr: 'Développement structuré en 20 phases', en: 'Development structured in 20 phases' },
     ],
     stack: ['Laravel', 'PHP 8.3', 'MySQL', 'Blade', 'Tailwind CSS', 'Alpine.js', 'Vite'],
-    image: null,
+    image: dropcreaCover,
     gallery: [],
     links: { github: '', demo: '' },
   },
   {
-    // Masqué : informations à fournir (fonctionnalités, technologies, rôle, liens).
+    // Décrit à partir de la capture d'écran : complétez challenge, solution, stack, rôle et liens.
     slug: 'global-immigration',
     title: 'Global Immigration',
-    draft: true,
-    categories: [],
-    summary: { fr: '', en: '' },
+    featured: false,
+    categories: ['webapp'],
+    type: { fr: 'Site d’agence d’immigration', en: 'Immigration agency website' },
+    summary: {
+      fr: 'Le site d’une agence d’accompagnement à l’immigration : services, pages par pays de destination, actualités, FAQ et contact.',
+      en: 'The website of an immigration support agency: services, destination country pages, news, FAQ and contact.',
+    },
+    features: [
+      {
+        fr: 'Menu des destinations et page dédiée à chaque pays, comme le Royaume-Uni',
+        en: 'Destinations menu and a dedicated page for each country, such as the United Kingdom',
+      },
+      { fr: 'Présentation de l’agence et de ses services', en: 'Agency and services presentation' },
+      { fr: 'Pages actualités, FAQ et contact', en: 'News, FAQ and contact pages' },
+      { fr: 'Accès connexion et inscription', en: 'Sign-in and sign-up access' },
+    ],
     stack: [],
+    image: globalImmigrationCover,
+    gallery: [],
     links: { github: '', demo: '' },
   },
 ]

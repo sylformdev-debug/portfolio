@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
-import { Menu, X } from 'lucide-react'
+import { Menu, Search, X } from 'lucide-react'
 import { navigation, sectionIds } from '../../data/navigation'
 import { profile } from '../../data/profile'
 import { useActiveSection } from '../../hooks/useActiveSection'
 import { usePreferences } from '../../hooks/usePreferences'
 import Button from '../ui/Button'
 import PreferenceToggles from '../ui/PreferenceToggles'
+import { openCommandPalette } from '../../utils/commandPalette'
 
 // « Projets » mène à la page dédiée ; les autres entrées vers les sections de l'accueil.
 function hrefFor(item) {
@@ -14,6 +15,10 @@ function hrefFor(item) {
   if (item.key === 'home') return '/'
   return `/#${item.id}`
 }
+
+// Raccourci affiché selon le système : ⌘ K sur Mac, Ctrl K ailleurs.
+const isMac = typeof navigator !== 'undefined' && /mac|iphone|ipad/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? '')
+const shortcutLabel = isMac ? '⌘ K' : 'Ctrl K'
 
 export default function Navbar() {
   const { t } = usePreferences()
@@ -108,6 +113,19 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-label={t('palette.open')}
+            aria-keyshortcuts="Control+K Meta+K"
+            title={`${t('palette.open')} (${shortcutLabel})`}
+            className="btn-glass btn-glass--icon lg:w-auto! lg:gap-3! lg:px-3.5!"
+          >
+            <Search size={17} aria-hidden="true" />
+            <kbd className="hidden rounded border border-line px-1.5 text-[0.7rem] font-semibold text-muted lg:inline">
+              {shortcutLabel}
+            </kbd>
+          </button>
           <PreferenceToggles />
           <Button to="/#contact" variant="gold" className="hidden min-h-10! px-5! sm:inline-flex">
             {t('nav.cta')}

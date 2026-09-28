@@ -4,6 +4,9 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import ScrollManager from './ScrollManager'
 import CustomCursor from './CustomCursor'
+import CommandPalette from './CommandPalette'
+import Toaster from './Toaster'
+import ScrollExtras from './ScrollExtras'
 
 // Structure commune à toutes les pages.
 export default function Layout() {
@@ -19,10 +22,13 @@ export default function Layout() {
       </a>
       <ScrollManager />
       <Navbar />
-      <main id="contenu">
+      <main id="contenu" tabIndex={-1} className="focus:outline-none">
         <Outlet />
       </main>
       <Footer />
+      <ScrollExtras />
+      <CommandPalette />
+      <Toaster />
       <CustomCursor />
     </>
   )

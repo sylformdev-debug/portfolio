@@ -348,6 +348,29 @@
   margin: -39px 0 0 -39px;
 }
 
+/* ---------- Fenêtres modales (recherche rapide, visionneuse) ---------- */
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.62);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.lightbox::backdrop {
+  background: rgb(0 0 0 / 0.9);
+}
+
+dialog[open] {
+  animation: dialog-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+}
+
 /* ---------- Transitions de page (View Transitions API) ---------- */
 
 ::view-transition-old(root) {
@@ -401,7 +424,8 @@
   }
 
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  dialog[open] {
     animation: none;
   }
 }
